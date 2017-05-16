@@ -6,15 +6,11 @@ class Fiddlesticks
 
   def measure(&block)
     no_gc = (ARGV[0] == "--no-gc")
-
-    if no_gc
-      GC.disable
-    else
-      GC.start
-    end
+    no_gc ? GC.disable : GC.start
 
     memory_before   = `ps -o rss= -p #{Process.pid}`.to_i/1024
     gc_stat_before  = GC.stat
+
     time = Benchmark.realtime do
       yield
     end
@@ -22,6 +18,7 @@ class Fiddlesticks
     unless no_gc
       GC.start(full_mark: true, immediate_sweep: true, immediate_mark: false)
     end
+
     gc_stat_after = GC.stat
     memory_after  = `ps -o rss= -p #{Process.pid}`.to_i/1024
 
