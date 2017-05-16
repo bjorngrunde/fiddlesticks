@@ -12,7 +12,7 @@ As for now: W.i.P
     end
    end
  ```
- The code will return a table with usefull information that may help when optimizing your code.
+ The object ***measure*** method will accept a block and return a table with usefull information that may help when optimizing your code.
  ```
  +--------------+---------+-----------+--------------+-------------+------+
 | Ruby Version | GC      | GC Sweeps | Total Memory | Memory Used | Time |
