@@ -2,7 +2,7 @@ require "benchmark"
 require "color-console"
 require "fiddlesticks/os"
 
-class Fiddlesticks
+module Fiddlesticks
 
   def measure(&block)
     no_gc = (ARGV[0] == "--no-gc")
@@ -43,4 +43,9 @@ class Fiddlesticks
 
     Console.display_table([header, data], width: 100, col_sep: "|", row_sep: "-")
   end
+end
+
+module Kernel
+  private
+  include Fiddlesticks
 end

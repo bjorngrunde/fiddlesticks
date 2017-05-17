@@ -9,6 +9,6 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = ">= 1.3.6"
   s.files = ["lib/fiddlesticks.rb", "lib/fiddlesticks/os.rb"]
   s.add_runtime_dependency 'color-console', '~> 0'
-  # s.extra_rdoc_files = ['README.md', 'LICENSE']
+  s.extra_rdoc_files = ['README.md', 'LICENSE']
   s.license = 'MIT'
 end
