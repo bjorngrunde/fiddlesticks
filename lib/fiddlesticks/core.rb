@@ -1,6 +1,7 @@
 require "benchmark"
 require "color-console"
 require "fiddlesticks/os"
+require "fiddlesticks/memory"
 
 module Fiddlesticks
   module Core
@@ -11,7 +12,7 @@ module Fiddlesticks
       no_gc ? GC.disable : GC.start
 
       #Collect memory used before block is run
-      memory_before   = `ps -o rss= -p #{Process.pid}`.to_i/1024
+      memory_before = get_memory(:mb)
       #Get Garbage Collectors hash, atm used for the :count key to calculate amount of sweeps done during block execution
       gc_stat_before  = GC.stat
 
@@ -28,21 +29,13 @@ module Fiddlesticks
       #Get hash for the block that was run
       gc_stat_after = GC.stat
       #Obatin current memory after block is run
-      memory_after  = `ps -o rss= -p #{Process.pid}`.to_i/1024
-
+      memory_after  = get_memory(:mb)
       #Get total memory, this needs to be improved. Should show total memory available before block?
-      if OS.windows?
-        total_memory = "Support coming soon"
-      elsif OS.mac?
-        total_memory = "%d GB" % (`sysctl hw.memsize`.split(" ").last.to_i/1024/1024/1000)
-      elsif OS.linux?
-        total_memory = %x(free).split(" ")[7].to_i/1024/1024/1000
-      else
-        total_memory = "OS Not Found!"
-      end
+      total_memory = total_memory()
 
       #Calculate memory used for the block
-      memory_used = "%d MB" % (memory_after - memory_before)
+      calculate_memory = "%d MB" % (memory_after - memory_before)
+      memory_used = calculate_memory == "0 MB" ? "Less than 1 MB" : calculate_memory
 
       gc = no_gc ? "disabled" : "enabled"
       gc_count = gc_stat_after[:count] - gc_stat_before[:count]
