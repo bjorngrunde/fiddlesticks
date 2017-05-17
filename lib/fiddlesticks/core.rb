@@ -49,7 +49,7 @@ module Fiddlesticks
 
 
       header = ["Ruby Version", "GC", "GC Sweeps", "Total Memory", "Memory Used", "Time"]
-      data   = [ RUBY_VERSION, gc, gc_count, total_memory, memory_used, "#{time.round(2)} seconds"]
+      data   = [ RUBY_VERSION, gc, gc_count, total_memory, memory_used, "#{time.round(2)} Seconds"]
 
       Console.display_table([header, data], width: 100, col_sep: "|", row_sep: "-")
     end
