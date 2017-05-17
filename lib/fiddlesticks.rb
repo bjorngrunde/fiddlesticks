@@ -1,2 +1,2 @@
-require "fiddlesticks/core.rb"
+require 'fiddlesticks/core.rb'
 extend Fiddlesticks::Core
