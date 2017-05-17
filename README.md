@@ -4,15 +4,18 @@ Simple wrapper to measure optimization or to find bottlenecks in your codebase.
 
 As for now: W.i.P
 
+Require the gem.
+
 ```
-  opt = Fiddlesticks.new
-  opt.measure do
-    1000.times do
-      "SOME STRING".downcase
-    end
-   end
+ require 'fiddlesticks.rb'
+ 
+ measure do
+  1000.times do
+    "SOME STRING".downcase
+  end
+ end
  ```
- The object ***measure*** method will accept a block and return a table with usefull information that may help when optimizing your code.
+ The global ***measure*** method will accept a block and print a table with usefull information that may help when optimizing your code.
  ```
  +--------------+---------+-----------+--------------+-------------+------+
 | Ruby Version | GC      | GC Sweeps | Total Memory | Memory Used | Time |
