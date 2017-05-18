@@ -11,6 +11,11 @@ Install
 ```
 gem install fiddlesticks
 ```
+Gem File
+
+```
+gem 'fiddlesticks', '~> 0.2.0'
+```
 Use
 ```
 optimize = Fiddlesticks::Core.new
