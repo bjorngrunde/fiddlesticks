@@ -3,6 +3,8 @@ require "color-console"
 require "fiddlesticks/os"
 require "fiddlesticks/memory"
 
+# Fiddlesticks runs a block of code and measures memory usage and execution time.
+# @author Björn Grunde
 module Fiddlesticks
   class Core
     include OS
@@ -19,6 +21,11 @@ module Fiddlesticks
     end
 
     def configure(opt = {})
+      #@params opt [Hash]
+      #@description Accepts a [Hash] with the keys:
+      #   total_memory [Symbol] format type ':kb', ':mb', 'gb' standard: ':gb',
+      #   used_memory [Symbol] format type ':kb', ':mb', 'gb' standard: ':mb',
+      #   gc_enabled [Boolean] format type 'true', 'false' standard: 'true'
       opt.each { |k, v| @config[k.to_sym] = v if @valid_keys.include? k.to_sym }
     end
 
@@ -42,8 +49,6 @@ module Fiddlesticks
       gc_stat_after = GC.stat
       memory_after  = get_memory(used_memory_type)
       memory_total = total_memory(total_memory_type)
-
-      puts "#{memory_before} #{memory_after}"
       memory_used = calculate_memory(memory_before, memory_after, used_memory_type)
 
       gc = gc_enabled ? "enabled" : "disabled"

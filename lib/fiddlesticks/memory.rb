@@ -3,11 +3,11 @@ module Fiddlesticks
 
     def get_memory type
       type.to_sym
-      memory = `ps -o rss= -p #{Process.pid}`.to_i
+      memory = `ps -o rss= -p #{Process.pid}`.to_f
 
       case type
       when :mb then memory = memory/1024
-      when :gb then memory = memory/1024/1024/1000
+      when :gb then memory = memory/1024/1024
       when :kb then memory
       end
 
@@ -39,16 +39,17 @@ module Fiddlesticks
       when :gb then total_memory = total_memory/1024/1024/1000
       end
 
-      return "%d #{type.upcase}" % total_memory if [:kb, :mb, :gb].include?(type) && total_memory.is_a?(Integer)
+      return "%.2f #{type.upcase}" % total_memory if [:kb, :mb, :gb].include?(type) && total_memory.is_a?(Integer)
 
       raise ArgumentError.new("Argument is not of type Symbol, expected one of(:kb, :mb, :gb)")
       raise NotImplementedError.new("Fiddlesticks either lack support or could not figure out the os: #{os}") if ["Windows", "Unkown OS"].include?(os)
     end
 
     def calculate_memory before, after, type
-      before.to_i && after.to_i && type.to_sym
-      memory_used = (after - before)
-      return memory_used = "%d #{type.upcase}" % memory_used unless memory_used == 0
+      before.to_f && after.to_f && type.to_sym
+
+      memory_used = after - before
+      return memory_used = "%g #{type.upcase}" % ("%.4f" % memory_used) unless memory_used == 0
       "Less than 1 MB"
     end
   end
