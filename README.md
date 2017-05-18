@@ -1,6 +1,6 @@
 # fiddlesticks
 
-Simple wrapper to measure optimization or to find bottlenecks in your codebase.
+Simple class to measure optimization or to find bottlenecks in your codebase.
 
 As for now: 
  Works on Mac.
